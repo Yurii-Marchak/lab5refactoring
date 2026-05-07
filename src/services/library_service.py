@@ -4,6 +4,7 @@ from src.repositories.user_repository import UserRepository
 from src.repositories.borrow_repository import BorrowRepository
 from src.models.borrow_record import BorrowRecord
 
+
 class LibraryService:
     def __init__(self, book_repo: BookRepository, user_repo: UserRepository, borrow_repo: BorrowRepository):
         self.book_repo = book_repo
@@ -25,17 +26,17 @@ class LibraryService:
 
         borrow_date = datetime.now()
         expected_return = borrow_date + timedelta(days=14)
-        
+
         record = BorrowRecord(
-            user_id=user_id, 
-            book_id=book_id, 
-            borrow_date=borrow_date, 
+            user_id=user_id,
+            book_id=book_id,
+            borrow_date=borrow_date,
             expected_return_date=expected_return
         )
-        
+
         record_id = self.borrow_repo.save(record)
         self.book_repo.update_copies(book_id, book.available_copies - 1)
-        
+
         return record_id
 
     def return_book(self, user_id: str, book_id: str) -> None:
@@ -44,6 +45,6 @@ class LibraryService:
             raise ValueError("Active borrow record not found.")
 
         self.borrow_repo.update_actual_return_date(record.id, datetime.now())
-        
+
         book = self.book_repo.find_by_id(book_id)
         self.book_repo.update_copies(book_id, book.available_copies + 1)

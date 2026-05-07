@@ -1,3 +1,5 @@
 pymongo
 pytest
 pytest-mock
+flake8
+autopep8

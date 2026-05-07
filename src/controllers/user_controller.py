@@ -1,6 +1,7 @@
 from src.services.user_service import UserService
 from src.dto.user_dto import UserCreateDTO
 
+
 class UserController:
     def __init__(self, user_service: UserService):
         self.user_service = user_service

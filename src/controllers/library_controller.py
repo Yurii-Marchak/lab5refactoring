@@ -1,5 +1,6 @@
 from src.services.library_service import LibraryService
 
+
 class LibraryController:
     def __init__(self, library_service: LibraryService):
         self.library_service = library_service
